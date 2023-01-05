@@ -3,10 +3,12 @@
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:react/recommended",
+    "plugin:react/hooks/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier"
+    "prettier" // Prettier MUST be the last
   ],
   "rules": {
+    // 0 ignore, 1 warn, 2 error
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0
   },
