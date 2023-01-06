@@ -57,7 +57,7 @@ export const SearchParams = () => {
         <select
           name="breeds"
           id="breeds"
-          value={animal}
+          value={breed}
           onChange={(e) => setBreed(e.target.value)}
           disabled={breeds.length === 0}
         >
