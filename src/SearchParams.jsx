@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Pet from "./Pet";
+import useBreedList from "./useBreedList";
 const ANIMALS = ["cat", "dog", "bird"];
-const BREEDS = [""];
 
 let counter = 1;
 export const SearchParams = () => {
@@ -9,12 +9,12 @@ export const SearchParams = () => {
   const [location, setLocation] = useState("");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([]); // eslint-disable-line no-unused-vars
+  const [breeds] = useBreedList(animal);
 
   useEffect(() => {
     requestPets();
   }, []);
-
   async function requestPets() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
@@ -59,10 +59,10 @@ export const SearchParams = () => {
           id="breeds"
           value={animal}
           onChange={(e) => setBreed(e.target.value)}
-          disabled={BREEDS.length === 0}
+          disabled={breeds.length === 0}
         >
           <option key="select breed">Select Breed</option>
-          {BREEDS.map((breed) => (
+          {breeds.map((breed) => (
             <option key={breed}>{breed}</option>
           ))}
         </select>
