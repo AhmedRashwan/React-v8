@@ -16,6 +16,7 @@ export const SearchParams = () => {
     requestPets();
   }, []);
   async function requestPets() {
+    if (!location.length) return;
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
@@ -25,7 +26,7 @@ export const SearchParams = () => {
 
   return (
     <div className="search-params">
-      <h1>{counter}</h1>
+      <h3>{counter}</h3>
       <form
         onSubmit={(e) => {
           e.preventDefault();
