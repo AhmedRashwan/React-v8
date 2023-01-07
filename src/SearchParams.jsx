@@ -16,7 +16,6 @@ export const SearchParams = () => {
     requestPets();
   }, []);
   async function requestPets() {
-    if (!location.length) return;
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
