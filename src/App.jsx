@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Details from "./Details";
 import SearchParams from "./SearchParams";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppContext from "./AppContext";
+import { useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,19 +17,23 @@ const queryClient = new QueryClient({
 
 let counter = 0;
 const App = () => {
+  const LanguageState = useState("en");
+
   counter++;
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <header>
-          <Link to="/">Adopt me</Link>
-        </header>
-        <p>{counter}</p>
+        <AppContext.Provider value={LanguageState}>
+          <header>
+            <Link to="/">Adopt me</Link>
+          </header>
+          <p>{counter}</p>
 
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/" element={<SearchParams />} />
-        </Routes>
+          <Routes>
+            <Route path="/details/:id" element={<Details />} />
+            <Route path="/" element={<SearchParams />} />
+          </Routes>
+        </AppContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
   );
