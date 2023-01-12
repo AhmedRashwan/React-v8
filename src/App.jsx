@@ -21,8 +21,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <header>
-          <Link to="/">Adopt me</Link>
+        <header className="mb-10 w-full bg-gradient-to-b from-yellow-500 via-orange-40 to-red-500 p-7 text-center ">
+          <Link className="text-6xl text-white hover:text-green-300" to="/">
+            Adopt me
+          </Link>
         </header>
         <p>{counter}</p>
 

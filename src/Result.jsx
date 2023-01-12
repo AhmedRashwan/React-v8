@@ -2,13 +2,13 @@ import Pet from "./Pet";
 
 export const Result = ({ pets }) => {
   return (
-    <div className="search">
+    <div className="grid gap-4 lg:grid-cols-4 sm:grid-cols-2">
       {!pets.length ? (
         <h1>No Pets Found</h1>
       ) : (
         pets.map((pet) => {
           return (
-            <Pet
+            <Pet className="rounded-lg shadow-lg text-right"
               name={pet.name}
               id={pet.id}
               animal={pet.animal}
