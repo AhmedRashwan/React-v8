@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Details from "./Details";
 import SearchParams from "./SearchParams";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UseRefComponent from "./Routes/useRef";
+import UseReducerComponent from "./Routes/useReducer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +29,8 @@ const App = () => {
         <Routes>
           <Route path="/details/:id" element={<Details />} />
           <Route path="/" element={<SearchParams />} />
+          <Route path="/useRef" element={<UseRefComponent />} />
+          <Route path="/useReducer" element={<UseReducerComponent />} />
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
