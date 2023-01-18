@@ -4,15 +4,19 @@ import { useParams } from "react-router-dom";
 import AppContext from "./AppContext";
 import Carousel from "./Carousel";
 import fetchPet from "./fetchPet";
+import { Pet } from "./types/Pet";
 const Details = () => {
   const { id } = useParams();
-  const result = useQuery(["details", id], fetchPet);
+  const result = useQuery<Pet[]>(["details", id], fetchPet);
   const context = useContext(AppContext);
 
   if (result.isLoading) return <h2>Loading...</h2>;
 
   console.log({ context });
-  const pet = result.data.pets[0];
+  const pet: Pet = result?.data?.pets[0];
+  if (!pet) {
+    return <h2>Not Found</h2>;
+  }
   return (
     <div className="w-64  bg-gray-600 ">
       <Carousel images={pet.images} className="rounded-t" />

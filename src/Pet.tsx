@@ -1,6 +1,8 @@
+import { ReactElement } from "react";
 import { Link } from "react-router-dom";
-const Pet = (props) => {
-  const { name, animal, breed, images, location, id } = props;
+import { Pet as PetType } from "./types/Pet";
+const Pet = (props: any) => {
+  const { name, animal, breed, images, location, id }: PetType = props;
 
   let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
   if (images.length) {
