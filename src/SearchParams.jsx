@@ -1,25 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import fetchSearch from "./fetchSearch";
+import { useDispatch, useSelector } from "react-redux";
+import { all } from "./SearchParamsSlice";
 import { Result } from "./Result";
-import useBreedList from "./useBreedList";
+import { useGetBreedListQuery, useGetPetsQuery } from "./PetApiService";
+
 const ANIMALS = ["cat", "dog", "bird"];
 
 let counter = 1;
 export const SearchParams = () => {
   counter++;
-  const [animal, setAnimal] = useState("");
-  const [breeds] = useBreedList(animal);
-
-  const [requestParams, setRequestParams] = useState({
-    location: "",
-    animal: "",
-    breed: "",
+  const dispatch = useDispatch();
+  const [animal, setAnimal] = useState();
+  let { data: breeds } = useGetBreedListQuery(animal, {
+    skip: !animal,
   });
 
-  const results = useQuery(["search", requestParams], fetchSearch);
-  const pets = results?.data?.pets ?? [];
-  console.log({ results });
+  const searchParams = useSelector((state) => state.searchParams.value);
+  const { data: pets } = useGetPetsQuery(searchParams);
+
   return (
     <div className="my-0 mx-auto w-11/12">
       <h3>{counter}</h3>
@@ -33,8 +31,7 @@ export const SearchParams = () => {
             breed: formData.get("breed") ?? "",
             location: formData.get("location") ?? "",
           };
-          console.log(obj);
-          setRequestParams(obj);
+          dispatch(all(obj));
         }}
       >
         <label className="item-left text-left " htmlFor="location">
@@ -55,7 +52,7 @@ export const SearchParams = () => {
           className="search-input"
         >
           <option key="select animal">Select Animal</option>
-          {ANIMALS.map((animal) => (
+          {ANIMALS?.map((animal) => (
             <option key={animal}>{animal}</option>
           ))}
         </select>
@@ -65,10 +62,10 @@ export const SearchParams = () => {
           className="search-input"
           name="breed"
           id="breed"
-          disabled={breeds.length === 0}
+          disabled={breeds?.length === 0}
         >
           <option key="select breed">Select Breed</option>
-          {breeds.map((breed) => (
+          {breeds?.map((breed) => (
             <option key={breed}>{breed}</option>
           ))}
         </select>
